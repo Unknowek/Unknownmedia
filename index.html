@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unknown Media</title>
+    <style>
+        body {
+            background-color: rgb(18, 18, 18);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            font-size: 1.5em;
+        }
+        #content {
+            text-align: center;
+            margin: auto;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        #footer {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            padding: 10px;
+        }
+        #footer img {
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">Unknown Media</div>
+    <div id="content">
+        <h1 id="title">Loading...</h1>
+        <a id="downloadLink" href="#" download>
+            <button>Pobierz</button>
+        </a>
+    </div>
+    <div id="footer">
+        <a href="https://www.youtube.com/channel/YourChannelID" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube">
+        </a>
+    </div>
+
+    <script>
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+            const results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        const encodedData = getParameterByName('data');
+
+        if (encodedData) {
+            const decodedData = atob(encodedData);
+            const [title, url] = decodedData.split("\n");
+
+            document.getElementById('title').innerText = title;
+            document.getElementById('downloadLink').href = url;
+        } else {
+            document.getElementById('title').innerText = 'Dane nie zostały znalezione';
+        }
+    </script>
+</body>
+</html>
